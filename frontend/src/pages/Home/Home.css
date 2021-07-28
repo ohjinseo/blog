@@ -1,0 +1,84 @@
+.home {
+  height: 5000px;
+}
+
+.homeTop {
+  position: relative;
+}
+
+.homeTopImg {
+  height: 700px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.homeTopCard {
+  width: 500px;
+  height: 200px;
+  background-color: #ececec93;
+  position: absolute;
+  right: 0;
+  left: 0;
+  margin: auto;
+  top: 560px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 15px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.homeTopCard h4 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Roboto", sans-serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: rgb(26, 26, 26);
+}
+
+.homeTopCard p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Dancing Script", cursive;
+  font-size: 23px;
+  color: rgb(19, 19, 19);
+}
+
+.homeCenter {
+  margin-top: 150px;
+  display: flex;
+  position: relative;
+}
+
+.homeCenterLeft {
+  flex: 9;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.homeCenterRight {
+  flex: 3;
+  position: relative;
+  transition: right 1s;
+}
+
+.homeCenterRight.hidden {
+}
+
+.menuBoxButton {
+  position: absolute;
+  right: 15px;
+  border: none;
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  cursor: pointer;
+  top: 40px;
+  font-size: 22px;
+  background-color: white;
+  font-family: "Roboto", sans-serif;
+}

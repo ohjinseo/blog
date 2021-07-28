@@ -1,71 +1,96 @@
-/*HEADER*/
-header {
-  background-color: #f6f5f0;
-  border-bottom: 1px solid #c8c8c8;
-  /* position: relative; */
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 9;
+.navbar {
   height: 80px;
-  display: flex;
-  align-items: center;
-}
-
-header .main-menu {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-header .main-menu ul {
-  display: flex;
-}
-
-header .main-menu ul li {
-  margin-right: 28px;
-}
-
-header .main-menu ul li a {
-  color: #656565;
-  font-size: 21px;
-  font-weight: 100;
-}
-
-header .main-menu ul li:hover a {
-  color: #000;
-}
-
-header .main-menu .search {
-  height: 34px;
-  position: relative;
-}
-
-header .main-menu .search input {
-  width: 36px;
-  height: 34px;
-  padding: 4px 10px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-  border-radius: 5px;
-  outline: none;
-  background-color: #fff;
-  color: #777;
-  font-size: 12px;
-  transition: 0.4s ease-in-out;
-}
-
-header .main-menu .search input:focus {
-  width: 190px;
-  border-color: #656565;
-}
-
-header .main-menu .search .search-icons {
-  height: 24px;
-  position: absolute;
+  border-bottom: 1px solid rgb(209, 209, 209);
+  position: sticky;
   top: 0;
-  bottom: 0;
-  right: 5px;
-  margin: auto 0;
-  transition: opacity 0.4s;
+  z-index: 999;
+  background-color: white;
+}
+
+.navbarWrapper {
+  padding: 5px;
+  display: flex;
+}
+
+.navBarLeft {
+  flex: 3;
+  display: flex;
+  align-items: center;
+}
+
+.navBarLeftLogo {
+  font-family: "MonteCarlo", cursive;
+  font-size: 40px;
+  margin-left: 60px;
+  cursor: pointer;
+}
+
+.navBarCenter {
+  flex: 4;
+}
+
+.navBarCenterItems {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+  font-size: 20px;
+  font-weight: 300;
+  font-family: "Roboto", sans-serif;
+}
+
+.navBarCenterItem {
+  cursor: pointer;
+}
+
+.navBarCenterItem:hover {
+  color: rgb(145, 145, 145);
+}
+
+.navBarRight {
+  flex: 3;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.navBarRightInputContainer {
+  position: relative;
+  width: 40%;
+}
+
+.navBarRightSearch {
+  margin-right: 20px;
+  padding: 5px 10px;
+  width: 80%;
+  border: 1px solid rgb(185, 185, 185);
+  height: 22px;
+}
+
+.navBarRightSearch:focus {
+  outline: none;
+}
+
+.navBarRightSearch::placeholder {
+  font-family: "Nanum Gothic", sans-serif;
+}
+
+.navBarRightSearchIcon {
+  position: absolute;
+  top: 6px;
+  right: 28px;
+  color: rgb(112, 112, 112);
+}
+
+.navBarRightImg {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 40px;
+  border: 1px solid rgb(207, 207, 207);
+  cursor: pointer;
 }
