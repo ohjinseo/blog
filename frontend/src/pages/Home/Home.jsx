@@ -21,7 +21,7 @@ export default function Home() {
         </div>
 
         <div className="homeCenter">
-          <div className="homeCenterLeft">
+          <div className={onInfo ? "homeCenterLeft" : "homeCenterLeft hidden"}>
             <Post />
             <Post />
             <Post />

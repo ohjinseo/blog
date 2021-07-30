@@ -5,6 +5,7 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import MailIcon from '@material-ui/icons/Mail';
 import TwitterIcon from '@material-ui/icons/Twitter';
+import MiniPost from '../MiniPost/MiniPost';
 
 export default function RightbarInfo() {
   return (
@@ -30,21 +31,9 @@ export default function RightbarInfo() {
         <hr />
 
         <ul className="rightbarRecentPosts">
-          <li className="rightbarRecentPost">
-            니가먼데
-          </li>
-          <li className="rightbarRecentPost">
-            Djkstra Algorithmiawjdiajwdiajwd
-          </li>
-          <li className="rightbarRecentPost">
-            Djkstra AlgorithmAZSdasd
-          </li>
-          <li className="rightbarRecentPost">
-            Djkstra Algorithm
-          </li>
-          <li className="rightbarRecentPost">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores, laudantium eos? Reiciendis reprehenderit dolore rem nostrum corrupti, adipisci perferendis ad sed eius officiis suscipit, labore aliquam ipsum quas deserunt quis?
-          </li>
+          <MiniPost />
+          <MiniPost />
+          <MiniPost />
         </ul>
 
         <hr className="commentHr"/>
@@ -52,21 +41,10 @@ export default function RightbarInfo() {
         <hr />
 
         <ul className="rightbarRecentComments">
-          <li className="rightbarRecentComment">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam officiis ut architecto! Cum beatae aliquam porro enim numquam dolore, reprehenderit fuga deserunt cumque incidunt cupiditate laborum reiciendis iure vitae inventore?
-          </li>
-          <li className="rightbarRecentComment">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam officiis ut architecto! Cum beatae aliquam porro enim numquam dolore, reprehenderit fuga deserunt cumque incidunt cupiditate laborum reiciendis iure vitae inventore?
-          </li>
-          <li className="rightbarRecentComment">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam officiis ut architecto! Cum beatae aliquam porro enim numquam dolore, reprehenderit fuga deserunt cumque incidunt cupiditate laborum reiciendis iure vitae inventore?
-          </li>
-          <li className="rightbarRecentComment">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam officiis ut architecto! Cum beatae aliquam porro enim numquam dolore, reprehenderit fuga deserunt cumque incidunt cupiditate laborum reiciendis iure vitae inventore?
-          </li>
-          <li className="rightbarRecentComment">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam officiis ut architecto! Cum beatae aliquam porro enim numquam dolore, reprehenderit fuga deserunt cumque incidunt cupiditate laborum reiciendis iure vitae inventore?
-          </li>
+          <MiniPost />
+          <MiniPost />
+          <MiniPost />
+          
         </ul>
       </div>
     </div>

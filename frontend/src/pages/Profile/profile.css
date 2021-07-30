@@ -1,0 +1,42 @@
+.miniPost {
+  display: flex;
+  margin: 5% 0;
+  cursor: pointer;
+}
+
+.miniPost:hover img {
+  opacity: 0.8;
+}
+
+.miniPost:hover h4 {
+  text-decoration: underline;
+}
+
+.miniPostImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.miniPostLeft {
+  flex: 1;
+}
+
+.miniPostRight {
+  flex: 2;
+  padding: 0 10px;
+  font-family: "Roboto", sans-serif;
+}
+
+.miniPostHeader {
+  font-size: 186x;
+  font-weight: 400;
+  width: 90%;
+  margin-bottom: 2%;
+}
+
+.miniPostDay {
+  font-size: 14px;
+  font-weight: 300;
+  color: #333;
+}

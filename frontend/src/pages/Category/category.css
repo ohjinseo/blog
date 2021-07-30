@@ -1,0 +1,83 @@
+.category {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.categoryTop {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.backgroundImg {
+  width: 100%;
+  height: 50vh;
+  object-fit: cover;
+}
+
+.categoryTopHeader {
+  display: flex;
+  font-family: "Roboto", sans-serif;
+  position: absolute;
+  top: 35%;
+  color: rgb(255, 255, 255);
+  font-size: 82px;
+  font-weight: 400;
+}
+
+.categoryBottom {
+  display: flex;
+  justify-content: center;
+  margin-top: 5vh;
+}
+
+.categoryWrapper {
+  display: flex;
+
+  width: 80%;
+  flex-wrap: wrap;
+}
+
+.categoryBox {
+  width: 30%;
+  margin: 50px 1.65%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.categoryBox:hover img {
+  opacity: 0.5;
+}
+
+.categoryBoxWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
+.categoryBox img {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.categoryHeader {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.541);
+  padding: 10px 50px;
+  font-size: 1.9em;
+  font-weight: 500;
+  font-family: "Roboto", sans-serif;
+  color: black;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.categoryBox:hover .categoryHeader {
+  background-color: white;
+}
