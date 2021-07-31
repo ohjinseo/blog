@@ -1,5 +1,5 @@
 import './postContent.css'
-import postImg from '../../assets/images/post/nature10.jpg'
+import CircularProgress from '@material-ui/core/CircularProgress';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import userImage from '../../assets/images/person/noavatar.png'
@@ -8,64 +8,105 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import MailIcon from '@material-ui/icons/Mail';
 import TwitterIcon from '@material-ui/icons/Twitter';
-import nextPost1 from '../../assets/images/post/nature8.jpg'
-import nextPost2 from '../../assets/images/post/nature9.jpg'
-import nextPost3 from '../../assets/images/post/nature10.jpg'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import { postAllGetAction, postIdFromGetAction } from '../../Redux/Actions/posts/postGetAction';
+import { useParams } from 'react-router';
+import { userGetAction } from '../../Redux/Actions/users/userGetAction';
+import {Link} from 'react-router-dom'
 
 export default function PostContent() {
   const [onMenu, setOnMenu] = useState(true);
+  const dispatch = useDispatch();
+  const {postId} = useParams();
+  const [sortPosts, setSortPosts] = useState([]);
+  const [nextPosts, setNextPosts] = useState([]);
+  const [slicePosts, setSlicePosts] = useState([]);
+  const imgLink = 'http://localhost:5000/images/';
+
+  
+  useEffect(()=>{
+    dispatch(postIdFromGetAction(postId));
+  },[dispatch])
+
+  const {post, loading} = useSelector(state=>state.postIdFromGetReducer);
+  const {userInfo} = useSelector(state=>state.userGetReducer);
+  const {posts} = useSelector(state=>state.postGetReducer);
+  
+  useEffect(()=>{
+    window.scrollTo({top:0})
+    if(post){
+      dispatch(userGetAction(post.userId));
+    }
+  }, [post])
+  
+  if(post){
+    var date = new Date(post.createdAt);
+    var year = date.getFullYear();
+    var month = date.getMonth()+1;
+    var day = date.getDate();
+  }
+
+  useEffect(()=>{
+    dispatch(postAllGetAction());
+  }, [dispatch])
+
+  useEffect(()=>{
+    if(posts){
+      setSortPosts(posts.sort((p1, p2)=>{
+        return new Date(p2.createdAt) - new Date(p1.createdAt);
+      }))
+    }
+
+    if(sortPosts && post){
+      setNextPosts(sortPosts.filter((p) => (
+        new Date(post.createdAt) > new Date(p.createdAt))))
+    }
+  },[posts, sortPosts])
+
+  useEffect(()=>{
+    if(nextPosts){
+      setSlicePosts(nextPosts.slice(0, 3));
+    }
+  }, [nextPosts])
+  
   return (
     <div className="postContent">
       <div className={onMenu ? "postContentLeft" : "hidden postContentLeft"}>
         <div className="postContentLeftWrap">
+        {loading ? <CircularProgress size="50px" style={{color:"gray", position:"relative",left:"50%",top:"20vh"}}/> :(
+        <>
         <div className="postContentTop">
-          <img src={postImg} alt="" />
+          <img src={post ? (imgLink + post.image) : (imgLink+'post/nature.jpg')} alt="" />
         </div>
 
         <div className="postContentBottom">
           <div className="postContentBottomTop">
 
-            <h4 className="postContentBottomHeader">DJKSTRA ALGORITHM</h4>
+            <h4 className="postContentBottomHeader">{post?.title}</h4>
             <ul className="categories">
-              <li className="category">Algorithm</li>
-              <li className="category">Study</li>
+              <li className="category">{post?.category}</li>
             </ul>
             <div className="userInfo">
-              <img src={userImage} alt="" />
-              <span className="userName">Oh jin seo</span>
+              <img src={userInfo?.profilePicture ? (imgLink + userInfo.profilePicture) : (imgLink + 'person/noavatar.png')} alt="" />
+              <span className="userName">{userInfo?.name}</span>
             </div>
             <div className="postIcons">
             <EditIcon className="editIcon" fontSize="large"/>
             <DeleteIcon className="deleteIcon" fontSize="large"/>
 
             </div>
-            <span className="postDay">2021-01-23</span>
+            <span className="postDay">{post && year+'-'+(month>9?month:"0"+month)+'-'+day}</span>
           </div>
 
           <div className="postContentBottomCenter">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum corporis debitis voluptatem dolore voluptates saepe rem atque quisquam doloribus repellat ipsa ipsum explicabo adipisci libero earum, velit sed mollitia! Aperiam. 
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, dolore culpa, neque eveniet nisi ratione ipsa animi sapiente distinctio officia cumque esse magnam at, sequi officiis ea dolorum quam soluta! Lorem ipsum, dolor sit am
-              et consectetur adipisicing elit. Officia consequatur repellendus similique quaerat eligendi aperiam doloribus mollitia, at sed, fugiat tempore cum cumque nulla quia velit dolorum nisi inventore rerum. 
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate a molestiae, reiciendis rem perspiciatis laborum delectus eius nam sequi similique pariatur magni ullam vero fuga harum vitae, quia obcaecati aut
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint, aliquam laborum? Tenetur consequatur illo, distinctio cum dicta quos aut minus. Tenetur amet labore nesciunt sit asperiores deleniti doloremque tempore totam!
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto quas consequuntur nemo officia temporibus dicta illo tempore esse unde iure sed suscipit in perspiciatis accusamus tenetur, placeat, necessitatibus delectus natus.
-              <br/>
-              <br/>
-              <br/>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique velit, iste quod doloremque, ad deserunt dolorum ea tempora assumenda quisquam laboriosam placeat repellat corporis modi soluta ipsa eaque est asperiores!
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora saepe blanditiis praesentium suscipit animi velit vitae aliquam maxime, illum numquam quo consequuntur assumenda molestias expedita nulla, quas soluta at. Debitis!
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa aliquid perspiciatis illum corporis quasi dolore, tempora adipisci ut delectus cupiditate dignissimos ad fuga labore laboriosam dolores voluptas, harum mollitia beatae.
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. In quos quis, soluta nam sit doloribus repellat perspiciatis illo iusto, ullam quo, amet ducimus quae tenetur? Similique, eius neque! Ea, ipsum?
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque ipsam iusto, fugit veritatis aliquid nisi, minima totam commodi ab, deserunt nesciunt est deleniti pariatur voluptatibus delectus repellendus sint molestias cumque?
-
-            </p>
+            <pre>{post?.desc}</pre>
           </div>
-          
-        </div>
+          </div>
+          </>
+      )}
         </div>
       </div>
 
@@ -85,46 +126,24 @@ export default function PostContent() {
               </div>
           </div>
 
+          
           <div className="nextPostsBox">
             <h4 className="nextPostsBoxHeader">Next posts</h4>
-            <hr className="hr__1" />
-            <div className="nextPost">
+            {slicePosts && slicePosts.map(p => (
+              <>
+                <hr className="hr__1" />
+            <Link  to={`${p._id}`} style={{textDecoration:"none", color:"inherit"}} className="nextPost">
               <div className="nextPostLeft">
-                  <img className="nextPostImg" src={nextPost1} />
+                  <img className="nextPostImg" src={p.image ? (imgLink + p.image) : (imgLink + 'post/nature3.jpg')} />
               </div>
               
               <div className="nextPostRight">
-                <h4 className="nextPostHeader">A Winter Morning</h4>
-                <span className="nextPostDay">2021-02-01</span>
+                <h4 className="nextPostHeader">{p.title}</h4>
+                <span className="nextPostDay">{p.createdAt}</span>
               </div>
-            </div>
-
-            <hr className="hr__1"/>
-            
-            <div className="nextPost">
-              <div className="nextPostLeft">
-                  <img className="nextPostImg" src={nextPost2} />
-              </div>
-              
-              <div className="nextPostRight">
-                <h4 className="nextPostHeader">DJKSTRA ALGORITHM</h4>
-                <span className="nextPostDay">2021-02-01</span>
-              </div>
-            </div>
-
-            <hr className="hr__1"/>
-
-            <div className="nextPost">
-              <div className="nextPostLeft">
-                  <img className="nextPostImg" src={nextPost3} />
-              </div>
-              
-              <div className="nextPostRight">
-                <h4 className="nextPostHeader">DJKSTRA ALGORITHM</h4>
-                <span className="nextPostDay">2021-02-01</span>
-              </div>
-            </div>
-
+            </Link>
+              </>
+            ))}
             
           </div>
         </div>

@@ -4,10 +4,30 @@ import Post from '../../components/Post/Post';
 import RightbarInfo from '../../components/RightbarInfo/RightbarInfo';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import { postAllGetAction } from '../../Redux/Actions/posts/postGetAction';
 
 export default function Home() {
   const [onInfo, setOnInfo] = useState(true);
+  const [sortPosts, setSortPosts] = useState([]);
+  const {posts, loading} = useSelector(state=>state.postGetReducer);
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    dispatch(postAllGetAction());
+
+    
+  }, [dispatch])
+
+  useEffect(()=>{
+    if(posts){
+      window.scrollTo({top:0})
+      setSortPosts(posts.sort((p1, p2)=>{
+        return new Date(p2.createdAt) - new Date(p1.createdAt);
+      }))
+    }
+  }, [posts])
 
   return (
     <div className="home">
@@ -22,12 +42,10 @@ export default function Home() {
 
         <div className="homeCenter">
           <div className={onInfo ? "homeCenterLeft" : "homeCenterLeft hidden"}>
-            <Post />
-            <Post />
-            <Post />
-            <Post />
-            <Post />
-            <Post />
+            {sortPosts?.map((post)=>(
+              <Post post={post}/>
+            ))}
+
           </div>
 
           <div className={onInfo ? "homeCenterRight" : "homeCenterRight hidden"}>

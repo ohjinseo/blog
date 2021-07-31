@@ -42,14 +42,26 @@ router.delete("/:postId", async (req, res) => {
   }
 });
 
-//FETCH ALL POST || MY POST
+//FETCH ALL POST || MY POST || ONLY POST
 router.get("/", async (req, res) => {
   const userId = req.query.userId;
-  try {
-    const posts = userId ? await Post.find({ userId }) : await Post.find({});
-    res.status(200).json(posts);
-  } catch (error) {
-    res.status(500).json(error);
+  const postId = req.query.postId;
+  if (postId) {
+    try {
+      const post = await Post.findById(postId);
+      !post && res.status(500).json("Not found");
+      res.status(200).json(post);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  } else {
+    try {
+      const posts = userId ? await Post.find({ userId }) : await Post.find({});
+      !posts && res.status(500).json("Not found");
+      res.status(200).json(posts);
+    } catch (error) {
+      res.status(500).json(error);
+    }
   }
 });
 

@@ -14,7 +14,7 @@
 
 .writeTopImg {
   width: 80%;
-  height: 300px;
+  height: 70vh;
   object-fit: cover;
   border-radius: 30px;
 }

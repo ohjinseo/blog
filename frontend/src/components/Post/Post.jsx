@@ -1,34 +1,37 @@
 import './post.css'
-import postImg from '../../assets/images/post/1.jpeg'
+import {format} from 'timeago.js';
+import {Link} from 'react-router-dom'
 
-export default function Post() {
+export default function Post({post}) {
+  const imgLink = "http://localhost:5000/images/";
+
+  const {category, title, desc, createdAt, image, _id} = post;
   return (
-    <div className="post">
+    <Link to ={`post/${_id}`} style={{textDecoration:"none", color:"inherit"}} className="post">
       <div className="postWrapper">
         <div className="postTop">
-          <img className="postTopImg" src={postImg} alt="" />  
+          <img className="postTopImg" src={image ? (imgLink + image) : (imgLink + 'post/nature3.jpg')} alt="" />  
         </div>
         <div className="postBottom">
           <ul className="postBottomCategory">
-            <li>Algorithm</li>
-            <li>STUDY</li>
+            <li>{category}</li>
           </ul>
 
           <h4 className="postBottomHeader">
-            다익스트라 알고리즘
+            {title}
           </h4>
 
           <p className="postBottomContent">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque facilis, distinctio nihil officiis expedita minus et delectus, architecto praesentium libero possimus veritatis recusandae. Tempora corrupti rerum optio nemo modi eaque.
+            {desc}
           </p>
 
           <span className="postBottomDate">
-            2021.04.21
+            {format(createdAt)}
           </span>
         </div>
 
       </div>
       
-    </div>
+    </Link>
   )
 }

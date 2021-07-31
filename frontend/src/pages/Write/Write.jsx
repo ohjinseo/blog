@@ -1,36 +1,67 @@
 import './write.css'
-import backgroundImg from '../../assets/images/post/nature2.jpg';
 import AddIcon from '@material-ui/icons/Add';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { postRegisterAction } from '../../Redux/Actions/posts/postRegisterAction';
+import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
 export default function Write() {
   const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
   const [category, setCategory] = useState("");
+  const [image, setImage] = useState(null);
+
+  const desc = useRef();
 
   const dispatch = useDispatch();
   const {_id} = useSelector(state => state.userLoginReducer.userInfo);
   const history = useHistory();
+  const {postInfo} = useSelector(state=>state.postRegisterReducer);
+
+  useEffect(()=>{
+    if(postInfo){
+      history.push('/posts');
+      window.location.reload();
+      }
+  }, [postInfo]);
+
+  useEffect(()=>{
+    window.scrollTo({top:0, behavior:'smooth'})
+  }, [image])
   
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
-    dispatch(postRegisterAction(title, desc, category, _id));
+    const post = {
+      title,
+      desc:desc.current.value,
+      category,
+      _id,
+    }
+    if(image){
+      const data = new FormData();
+      const filename = Date.now() + image.name;
+      data.append("name", filename);
+      data.append("file", image);
+      post.image = filename;
+      console.log('asd')
+
+      try {
+        await axios.post('/api/upload', data);
+      } catch (error) {
+      }
+    }
+    dispatch(postRegisterAction(post));
     
-    history.push('/posts');
-    window.location.reload();
   }
 
   return (
     <div className="write">
       <div className="writeWrapper">
         <div className="writeTop">
-          <img className="writeTopImg" src={backgroundImg} alt="" />
+          {image && (<img className="writeTopImg" src={URL.createObjectURL(image)} alt="" />)}
         </div>
 
         <form className="writeBottom" onSubmit={onSubmitHandler}>
@@ -38,7 +69,7 @@ export default function Write() {
           <div className="writeBottomCenter">
           <label htmlFor="fileIcon" className="fileIconBox">
             <AddIcon fontSize="large"  className="fileIcon" />
-            <input type="file" id="fileIcon" style={{display:"none"}}/>
+            <input onChange={e=>setImage(e.target.files[0])} type="file" id="fileIcon" style={{display:"none"}}/>
           </label>
             <input required value={title} onChange={e=>setTitle(e.target.value)} placeholder="Header" className="writeHeader" type="text" />
 
@@ -51,7 +82,7 @@ export default function Write() {
               </Select>
             </FormControl>
 
-            <textarea required value={desc} onChange={e=>setDesc(e.target.value)} placeholder="What's your mind?" className="writeContent"></textarea>
+            <textarea required ref={desc}  placeholder="What's your mind?" className="writeContent"></textarea>
           </div>
           <button type="submit" className="publishButton">PUBLISH</button>
         </form>

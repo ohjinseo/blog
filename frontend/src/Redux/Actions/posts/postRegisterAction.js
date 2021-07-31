@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const postRegisterAction = (title, desc, category, userId) => {
+const postRegisterAction = ({ title, desc, category, _id, image }) => {
   return async (dispatch) => {
     try {
       dispatch({
@@ -10,7 +10,8 @@ const postRegisterAction = (title, desc, category, userId) => {
         title,
         desc,
         category,
-        userId,
+        userId: _id,
+        image,
       });
 
       dispatch({
