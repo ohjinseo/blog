@@ -4,14 +4,15 @@ import { userRegisterAction } from '../../Redux/Actions/users/userRegisterAction
 import CircularProgress from '@material-ui/core/CircularProgress';
 import './register.css'
 import '../Login/login.css';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 
-export default function Register({history}) {
+export default function Register() {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [checkPassword, setCheckPassword] = useState("")
+  const history = useHistory();
 
   const dispatch = useDispatch();
 

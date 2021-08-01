@@ -131,15 +131,25 @@
   align-items: flex-start;
   font-weight: 300;
   font-size: 16px;
-  margin-top: 5%;
-}
-
-.popularPost {
-  margin-bottom: 5%;
+  margin-top: 2%;
 }
 
 .popularPost:hover {
   color: gray;
   text-decoration: underline;
+  cursor: pointer;
+}
+
+.calendarBox {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.cancleIcon {
+  position: absolute;
+  right: 10%;
+  top: 15%;
+  color: goldenrod;
   cursor: pointer;
 }

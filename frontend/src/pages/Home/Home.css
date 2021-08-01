@@ -1,6 +1,5 @@
 .home {
   height: 5000px;
-  overflow-x: hidden;
 }
 
 .homeTop {
@@ -48,48 +47,60 @@
   color: rgb(19, 19, 19);
 }
 
+.homeWrapper {
+  height: 100%;
+}
+
 .homeCenter {
   margin-top: 150px;
-  display: flex;
-  position: relative;
+  height: 100%;
 }
 
 .homeCenterLeft {
   padding: 10px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  flex: 9;
   position: absolute;
   width: 75%;
   transition: 0.7s;
+  justify-content: center;
 }
 
 .homeCenterLeft.hidden {
   width: 100%;
 }
 
-.homeCenterRight {
-  position: absolute;
-  right: 0;
-  width: 25%;
-  transition: 0.7s;
-}
-
-.homeCenterRight.hidden {
-  right: -480px;
-}
-
 .menuBoxButton {
   position: absolute;
-  right: 15px;
+  left: -10%;
   border: none;
   display: flex;
   align-items: center;
   padding: 5px 10px;
   cursor: pointer;
-  top: 35px;
+  top: 12%;
   font-size: 22px;
   background-color: white;
   font-family: "Roboto", sans-serif;
+}
+
+.arrowIcon.right {
+  padding: 5px 1px 5px 9px;
+}
+
+.homeCenterRight.hidden {
+  left: 97vw;
+}
+
+.homeCenterRight {
+  left: 75vw;
+  width: 25%;
+  position: relative;
+  height: 100%;
+  transition: 0.7s;
+}
+
+.stickyWrapper {
+  position: sticky;
+  top: 5%;
 }

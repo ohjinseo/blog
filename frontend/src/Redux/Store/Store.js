@@ -7,8 +7,12 @@ import { postRegisterReducer } from "../Reducers/posts/postRegisterReducer";
 import {
   postGetReducer,
   postIdFromGetReducer,
+  postGetCategoryReducer,
 } from "../Reducers/posts/postGetReducer";
 import { userGetReducer } from "../Reducers/users/userGetReducer";
+import { postDeleteReducer } from "../Reducers/posts/postDeleteReducer";
+import { postEditReducer } from "../Reducers/posts/postEditReducer";
+import { postLikeReducer } from "../Reducers/posts/postLikeReducer";
 
 const middleWares = [thunk];
 
@@ -19,6 +23,10 @@ const reducer = combineReducers({
   postGetReducer,
   postIdFromGetReducer,
   userGetReducer,
+  postDeleteReducer,
+  postEditReducer,
+  postGetCategoryReducer,
+  postLikeReducer,
 });
 
 const userAuth = localStorage.getItem("userAuth")

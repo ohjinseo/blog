@@ -9,6 +9,7 @@ import Category from "./pages/Category/Category";
 import PostContent from "./pages/PostContent/PostContent";
 import Profile from "./pages/Profile/Profile";
 import { useSelector } from "react-redux";
+//https://stackoverflow.com/questions/32261441/component-does-not-remount-when-route-parameters-change
 
 function App() {
   const { userInfo } = useSelector((state) => state.userLoginReducer);
@@ -24,6 +25,10 @@ function App() {
           {!userInfo ? <Redirect to="/" /> : <Write />}
         </Route>
 
+        <Route exact path="/write/:postId">
+          {!userInfo ? <Redirect to="/" /> : <Write />}
+        </Route>
+
         <Route exact path="/login">
           {userInfo ? <Redirect to="/" /> : <Login />}
         </Route>
@@ -36,13 +41,25 @@ function App() {
           {!userInfo ? <Redirect to="/" /> : <Posts />}
         </Route>
 
+        <Route exact path="/posts/:category">
+          {!userInfo ? <Redirect to="/" /> : <Posts />}
+        </Route>
+
         <Route exact path="/category">
           {!userInfo ? <Redirect to="/" /> : <Category />}
         </Route>
 
-        <Route exact path="/post/:postId">
-          {!userInfo ? <Redirect to="/" /> : <PostContent />}
-        </Route>
+        <Route
+          exact
+          path="/post/:postId"
+          render={(props) =>
+            !userInfo ? (
+              <Redirect to="/" />
+            ) : (
+              <PostContent key={props.match.params.postId} {...props} />
+            )
+          }
+        />
 
         <Route exact path="/profile/:userId">
           {!userInfo ? <Redirect to="/" /> : <Profile />}

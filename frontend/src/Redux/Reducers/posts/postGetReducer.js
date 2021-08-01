@@ -40,4 +40,28 @@ const postIdFromGetReducer = (state = {}, action) => {
   }
 };
 
-export { postGetReducer, postIdFromGetReducer };
+const postGetCategoryReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "POST_CATEGORY_GET_REQUEST":
+      return {
+        loading: true,
+      };
+
+    case "POST_CATEGORY_GET_SUCCESS":
+      return {
+        loading: false,
+        posts: action.payload,
+      };
+
+    case "POST_CATEGORY_GET_FAIL":
+      return {
+        loading: false,
+        error: action.type,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export { postGetReducer, postIdFromGetReducer, postGetCategoryReducer };

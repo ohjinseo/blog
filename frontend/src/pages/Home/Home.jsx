@@ -11,28 +11,45 @@ import { postAllGetAction } from '../../Redux/Actions/posts/postGetAction';
 export default function Home() {
   const [onInfo, setOnInfo] = useState(true);
   const [sortPosts, setSortPosts] = useState([]);
-  const {posts, loading} = useSelector(state=>state.postGetReducer);
+  const {posts} = useSelector(state=>state.postGetReducer);
   const dispatch = useDispatch();
+  let [popularPosts, setPopularPosts] = useState([]);
+  const [slicePopularPosts, setSlicePopularPosts] = useState([]);
 
   useEffect(()=>{
     dispatch(postAllGetAction());
-
-    
   }, [dispatch])
 
   useEffect(()=>{
     if(posts){
       window.scrollTo({top:0})
-      setSortPosts(posts.sort((p1, p2)=>{
+      const _posts = [...posts];
+      setSortPosts(_posts.sort((p1, p2)=>{
         return new Date(p2.createdAt) - new Date(p1.createdAt);
       }))
     }
   }, [posts])
 
+  useEffect(() => {
+    if(posts){
+      const _posts = [...posts];
+      setPopularPosts(_posts.sort((p1, p2)=>{
+        return p2.likes.length - p1.likes.length;
+      }))
+    }
+  }, [posts])
+
+  useEffect(()=>{
+    setSlicePopularPosts(popularPosts.slice(0, 3))
+  }, [popularPosts])
+
+
+
   return (
     <div className="home">
       <div className="homeWrapper">
         <div className="homeTop">
+          
           <img className="homeTopImg" src={wallpaper} />
           <div className="homeTopCard">
             <h4>WELCOME MY BLOG</h4>
@@ -49,12 +66,14 @@ export default function Home() {
           </div>
 
           <div className={onInfo ? "homeCenterRight" : "homeCenterRight hidden"}>
-            <RightbarInfo />
-          </div>
-          <button onClick={(e)=>setOnInfo(!onInfo)} className="menuBoxButton">
-            {onInfo ? <ArrowForwardIosIcon /> : <ArrowBackIosIcon/>}
-            <span>MY INFO</span>
+            <div className="stickyWrapper">
+            {slicePopularPosts && <RightbarInfo posts={slicePopularPosts}/>}
+            <button onClick={(e)=>setOnInfo(!onInfo)} className="menuBoxButton">
+            {onInfo ? <ArrowForwardIosIcon fontSize="large" className="arrowIcon home"/> : <ArrowBackIosIcon fontSize="large" className="arrowIcon right"/>}
           </button>
+          </div>
+          </div>
+          
         </div>
       </div>
 

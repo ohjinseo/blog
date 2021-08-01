@@ -1,17 +1,24 @@
 import './miniPost.css'
-import miniPost2 from '../../assets/images/post/nature9.jpg';
+import {Link} from 'react-router-dom'
+export default function MiniPost({post}) {
+  const imgLink = "http://localhost:5000/images/";
+  
+  const {title, createdAt, image} = post;
+  const date = new Date(createdAt);
+  const year = date.getFullYear();
+  let month = date.getMonth()+1;
+  const day = date.getDate();
 
-export default function MiniPost() {
   return (
-    <div className="miniPost">
+    <Link to={`/post/${post._id}`} style={{textDecoration:"none", color:"inherit"}} className="miniPost">
         <div className="miniPostLeft">
-          <img className="miniPostImg" src={miniPost2} />
+          <img className="miniPostImg" src={imgLink + image} />
         </div>
               
         <div className="miniPostRight">
-        <h4 className="miniPostHeader">DJKSTRA ALGORITHM</h4>
-        <span className="miniPostDay">2021-02-01</span>
+        <h4 className="miniPostHeader">{title}</h4>
+        <span className="miniPostDay">{year+'-'+(month>9?month:"0"+month)+'-'+(day<10 ? "0"+day : day)}</span>
       </div>
-    </div>
+    </Link>
   )
 }

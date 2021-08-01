@@ -13,9 +13,9 @@ export default function PostVer2({post}) {
   const day = date.getDate();
   return (
     
-    <Link to={`post/${_id}`} style={{textDecoration:"none", color:"inherit"}} className="postBox">
+    <Link to={`/post/${_id}`} style={{textDecoration:"none", color:"inherit"}} className="postBox">
             <div className="postBoxLeft">
-              <img src={imgLink+image} alt="" />
+              <img src={image ? imgLink+image : imgLink+'post/nature3.jpg'} alt="" />
             </div>
 
             <div className="postBoxRight">
@@ -32,7 +32,7 @@ export default function PostVer2({post}) {
                 {desc}
               </p>
 
-              <span className="postBoxRightDate">{year+'-'+(month>9?month:"0"+month)+'-'+day}</span>
+              <span className="postBoxRightDate">{year+'-'+(month>9?month:"0"+month)+'-'+(day<10 ? "0"+day : day)}</span>
             </div>
           </Link>
           

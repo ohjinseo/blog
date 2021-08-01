@@ -2,7 +2,6 @@ import './postContent.css'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import userImage from '../../assets/images/person/noavatar.png'
 import GitHubIcon from '@material-ui/icons/GitHub';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';
@@ -15,7 +14,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import { postAllGetAction, postIdFromGetAction } from '../../Redux/Actions/posts/postGetAction';
 import { useParams } from 'react-router';
 import { userGetAction } from '../../Redux/Actions/users/userGetAction';
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
+import {format} from 'timeago.js';
+import { postDeleteAction } from '../../Redux/Actions/posts/postDeleteAction';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import { postLikeAction } from '../../Redux/Actions/posts/postLikeAction';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 export default function PostContent() {
   const [onMenu, setOnMenu] = useState(true);
@@ -25,8 +29,10 @@ export default function PostContent() {
   const [nextPosts, setNextPosts] = useState([]);
   const [slicePosts, setSlicePosts] = useState([]);
   const imgLink = 'http://localhost:5000/images/';
+  const history = useHistory();
+  const [like, setLike] = useState("");
+  const [isLike, setIsLike] = useState(false);
 
-  
   useEffect(()=>{
     dispatch(postIdFromGetAction(postId));
   },[dispatch])
@@ -34,11 +40,43 @@ export default function PostContent() {
   const {post, loading} = useSelector(state=>state.postIdFromGetReducer);
   const {userInfo} = useSelector(state=>state.userGetReducer);
   const {posts} = useSelector(state=>state.postGetReducer);
+  const {userInfo:myUser} = useSelector(state=>state.userLoginReducer);
+  const {success} = useSelector(state=>state.postLikeReducer);
+
+
+  const postDeleteHandler = (e) =>{
+    if(window.confirm("정말 삭제합니까?")){
+      e.preventDefault();
+    dispatch(postDeleteAction(post._id, myUser._id));
+    history.push('/posts');
+    window.location.reload();
+    }
+  }
+
+  //좋아요
+  const postLikeHandler = (e) =>{
+    dispatch(postLikeAction(postId, myUser._id));
+    setIsLike(!like);
+    setLike(isLike ? like-1 : like + 1);
+  }
+
+  useEffect(()=>{
+    if(post){
+      setLike(post?.likes.length);
+      post.likes.includes(myUser?._id) ? setIsLike(true) : setIsLike(false);
+    }
+  }, [post?.likes, myUser]);
+  
+
+  useEffect(()=>{
+    dispatch(postAllGetAction());
+  }, [dispatch])
   
   useEffect(()=>{
     window.scrollTo({top:0})
     if(post){
       dispatch(userGetAction(post.userId));
+      
     }
   }, [post])
   
@@ -50,27 +88,27 @@ export default function PostContent() {
   }
 
   useEffect(()=>{
-    dispatch(postAllGetAction());
-  }, [dispatch])
-
-  useEffect(()=>{
     if(posts){
       setSortPosts(posts.sort((p1, p2)=>{
         return new Date(p2.createdAt) - new Date(p1.createdAt);
       }))
     }
+  }, [posts]);
 
+  useEffect(()=>{
     if(sortPosts && post){
       setNextPosts(sortPosts.filter((p) => (
         new Date(post.createdAt) > new Date(p.createdAt))))
     }
-  },[posts, sortPosts])
+  }, [sortPosts, post])
 
   useEffect(()=>{
-    if(nextPosts){
+    if(sortPosts && post && nextPosts){
       setSlicePosts(nextPosts.slice(0, 3));
     }
-  }, [nextPosts])
+    
+  }, [nextPosts, sortPosts, post])
+  
   
   return (
     <div className="postContent">
@@ -79,7 +117,7 @@ export default function PostContent() {
         {loading ? <CircularProgress size="50px" style={{color:"gray", position:"relative",left:"50%",top:"20vh"}}/> :(
         <>
         <div className="postContentTop">
-          <img src={post ? (imgLink + post.image) : (imgLink+'post/nature.jpg')} alt="" />
+          <img src={post?.image ? (imgLink + post.image) : (imgLink+'post/nature3.jpg')} alt="" />
         </div>
 
         <div className="postContentBottom">
@@ -93,12 +131,21 @@ export default function PostContent() {
               <img src={userInfo?.profilePicture ? (imgLink + userInfo.profilePicture) : (imgLink + 'person/noavatar.png')} alt="" />
               <span className="userName">{userInfo?.name}</span>
             </div>
-            <div className="postIcons">
-            <EditIcon className="editIcon" fontSize="large"/>
-            <DeleteIcon className="deleteIcon" fontSize="large"/>
 
+            <div className="postIcons">
+            <div className="likeIconBox" onClick={postLikeHandler}>
+            {isLike ? <FavoriteIcon  className="likeIcon" fontSize="large"/> : <FavoriteBorderIcon className="likeIcon" fontSize="large"/>}
+            
+            <span className="likeNum">{like}</span>
             </div>
-            <span className="postDay">{post && year+'-'+(month>9?month:"0"+month)+'-'+day}</span>
+            {userInfo?._id === myUser?._id &&(
+              <>
+              <Link to={`/write/${post._id}`}><EditIcon className="editIcon" fontSize="large"/></Link>
+              <DeleteIcon onClick={postDeleteHandler} className="deleteIcon" fontSize="large"/>
+              </>
+            ) }
+            </div>
+            <span className="postDay">{post && year+'-'+(month>9?month:"0"+month)+'-'+(day<10?"0"+day:day)}</span>
           </div>
 
           <div className="postContentBottomCenter">
@@ -139,7 +186,7 @@ export default function PostContent() {
               
               <div className="nextPostRight">
                 <h4 className="nextPostHeader">{p.title}</h4>
-                <span className="nextPostDay">{p.createdAt}</span>
+                <span className="nextPostDay">{format(p.createdAt)}</span>
               </div>
             </Link>
               </>

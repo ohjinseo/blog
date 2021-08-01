@@ -7,7 +7,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import MiniPost from '../MiniPost/MiniPost';
 
-export default function RightbarInfo() {
+export default function RightbarInfo({posts}) {
   return (
     <div className="rightbarinfo">
       <div className="rightbarinfoWrap">
@@ -27,25 +27,16 @@ export default function RightbarInfo() {
         </div>
 
         <hr/>
-        <span className="rightbarConnectHeader">RECENT POSTS</span>
+        <span className="rightbarConnectHeader">POPULAR POSTS</span>
         <hr />
 
         <ul className="rightbarRecentPosts">
-          <MiniPost />
-          <MiniPost />
-          <MiniPost />
-        </ul>
-
-        <hr className="commentHr"/>
-        <span className="rightbarConnectHeader comment">RECENT COMMENTS</span>
-        <hr />
-
-        <ul className="rightbarRecentComments">
-          <MiniPost />
-          <MiniPost />
-          <MiniPost />
+          {posts.map((p)=>(
+            <MiniPost post={p}/>
+          ))}
           
         </ul>
+
       </div>
     </div>
   )
