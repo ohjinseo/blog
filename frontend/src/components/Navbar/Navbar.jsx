@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 
 export default function Navbar() {
   const {userInfo} = useSelector(state=>state.userLoginReducer);
+  const imgLink = "http://localhost:5000/images/";
 
   const onClickLogout = (e) => {
     e.preventDefault();
@@ -50,7 +51,9 @@ export default function Navbar() {
             <input placeholder="Search" type="text" className="navBarRightSearch" />
             <SearchIcon className="navBarRightSearchIcon"/>
           </div>
-          <img className="navBarRightImg" src={noAvatar} alt="" />
+          <Link to={`/profile/${userInfo?._id}`}>
+          <img className="navBarRightImg" src={userInfo?.profilePicture ? imgLink + userInfo.profilePicture : imgLink + 'person/noavatar.png'} alt="" />
+          </Link>
           
         </div>
       </div>

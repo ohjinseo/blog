@@ -44,6 +44,27 @@ const postIdFromGetAction = (postId) => {
   };
 };
 
+const postFromUserIdGetAction = ({ userId }) => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: "POST_FROM_USERID_GET_REQUEST",
+      });
+      const res = await axios.get(`/api/post?userId=${userId}`);
+
+      dispatch({
+        type: "POST_FROM_USERID_GET_SUCCESS",
+        payload: res.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: "POST_FROM_USERID_GET_FAIL",
+        payload: error.response && error.response.data,
+      });
+    }
+  };
+};
+
 const postCategoryGetAction = (category) => {
   return async (dispatch) => {
     try {
@@ -66,4 +87,9 @@ const postCategoryGetAction = (category) => {
   };
 };
 
-export { postAllGetAction, postIdFromGetAction, postCategoryGetAction };
+export {
+  postAllGetAction,
+  postIdFromGetAction,
+  postCategoryGetAction,
+  postFromUserIdGetAction,
+};

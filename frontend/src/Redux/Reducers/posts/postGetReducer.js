@@ -40,6 +40,27 @@ const postIdFromGetReducer = (state = {}, action) => {
   }
 };
 
+const postFromUserIdGetReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "POST_FROM_USERID_GET_REQUEST":
+      return {
+        loading: true,
+      };
+    case "POST_FROM_USERID_GET_SUCCESS":
+      return {
+        loading: false,
+        userPosts: action.payload,
+      };
+    case "POST_FROM_USERID_GET_FAIL":
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
 const postGetCategoryReducer = (state = {}, action) => {
   switch (action.type) {
     case "POST_CATEGORY_GET_REQUEST":
@@ -64,4 +85,9 @@ const postGetCategoryReducer = (state = {}, action) => {
   }
 };
 
-export { postGetReducer, postIdFromGetReducer, postGetCategoryReducer };
+export {
+  postGetReducer,
+  postIdFromGetReducer,
+  postGetCategoryReducer,
+  postFromUserIdGetReducer,
+};

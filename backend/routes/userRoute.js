@@ -64,28 +64,33 @@ router.get("/:userId", async (req, res) => {
 
 //USER UPDATE
 router.put("/:userId", async (req, res) => {
-  try {
-    if (req.params.userId === req.body.userId) {
-      if (req.body.password) {
+  if (req.body.password === req.body.checkPassword) {
+    try {
+      if (req.params.userId === req.body.userId) {
+        if (req.body.password) {
+          try {
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(req.body.password, salt);
+            req.body.password = hashedPassword;
+          } catch (error) {
+            res.status(500).json(error);
+          }
+        }
         try {
-          const salt = await bcrypt.genSalt(10);
-          const hashedPassword = await bcrypt.hash(req.body.password, salt);
-          req.body.password = hashedPassword;
+          await User.findByIdAndUpdate(req.params.userId, {
+            $set: req.body,
+          });
         } catch (error) {
           res.status(500).json(error);
         }
+        const user = await User.findById(req.params.userId);
+        res.status(200).json(user);
       }
-      try {
-        const user = await User.findByIdAndUpdate(req.params.userId, {
-          $set: req.body,
-        });
-      } catch (error) {
-        res.status(500).json(error);
-      }
-      res.status(200).json("User has been updated");
+    } catch (error) {
+      res.status(500).json(error);
     }
-  } catch (error) {
-    res.status(500).json(error);
+  } else {
+    res.status(500).json("비밀번호가 맞지 않습니다.");
   }
 });
 

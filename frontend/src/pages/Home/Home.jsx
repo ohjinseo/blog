@@ -12,6 +12,7 @@ export default function Home() {
   const [onInfo, setOnInfo] = useState(true);
   const [sortPosts, setSortPosts] = useState([]);
   const {posts} = useSelector(state=>state.postGetReducer);
+  const {userInfo} = useSelector(state=>state.userLoginReducer);
   const dispatch = useDispatch();
   let [popularPosts, setPopularPosts] = useState([]);
   const [slicePopularPosts, setSlicePopularPosts] = useState([]);
@@ -52,7 +53,7 @@ export default function Home() {
           
           <img className="homeTopImg" src={wallpaper} />
           <div className="homeTopCard">
-            <h4>WELCOME MY BLOG</h4>
+            <h4>WELCOME {userInfo?.name}</h4>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo alias, at beatae iusto illum harum velit odio unde perferendis, dolores consequuntur ipsa enim qui? Architecto sunt vero quibusdam officiis optio!</p>
           </div>
         </div>

@@ -86,11 +86,11 @@
 }
 
 .navBarRightImg {
-  width: 34px;
-  height: 34px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   object-fit: cover;
   margin-right: 40px;
-  border: 1px solid rgb(207, 207, 207);
+
   cursor: pointer;
 }

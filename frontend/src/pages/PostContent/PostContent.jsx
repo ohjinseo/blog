@@ -44,6 +44,9 @@ export default function PostContent() {
   const {success} = useSelector(state=>state.postLikeReducer);
 
 
+  console.log(userInfo && userInfo);
+
+
   const postDeleteHandler = (e) =>{
     if(window.confirm("정말 삭제합니까?")){
       e.preventDefault();
@@ -76,7 +79,6 @@ export default function PostContent() {
     window.scrollTo({top:0})
     if(post){
       dispatch(userGetAction(post.userId));
-      
     }
   }, [post])
   
@@ -128,7 +130,9 @@ export default function PostContent() {
               <li className="category">{post?.category}</li>
             </ul>
             <div className="userInfo">
+              <Link to ={`/profile/${userInfo?._id}`} >
               <img src={userInfo?.profilePicture ? (imgLink + userInfo.profilePicture) : (imgLink + 'person/noavatar.png')} alt="" />
+              </Link>
               <span className="userName">{userInfo?.name}</span>
             </div>
 
@@ -140,7 +144,7 @@ export default function PostContent() {
             </div>
             {userInfo?._id === myUser?._id &&(
               <>
-              <Link to={`/write/${post._id}`}><EditIcon className="editIcon" fontSize="large"/></Link>
+              <Link to={`/write/${post?._id}`}><EditIcon className="editIcon" fontSize="large"/></Link>
               <DeleteIcon onClick={postDeleteHandler} className="deleteIcon" fontSize="large"/>
               </>
             ) }

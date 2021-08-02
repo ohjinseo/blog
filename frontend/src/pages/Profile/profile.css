@@ -1,42 +1,182 @@
-.miniPost {
+.profileImgBox {
+  position: relative;
   display: flex;
-  margin: 5% 0;
-  cursor: pointer;
+  justify-content: center;
 }
 
-.miniPost:hover img {
-  opacity: 0.8;
-}
-
-.miniPost:hover h4 {
-  text-decoration: underline;
-}
-
-.miniPostImg {
+.profileBgImg {
+  height: 50vh;
   width: 100%;
-  height: 100%;
   object-fit: cover;
 }
 
-.miniPostLeft {
-  flex: 1;
+.profileNameBox {
+  position: absolute;
+  bottom: -150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.miniPostRight {
-  flex: 2;
-  padding: 0 10px;
+.profileImg {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid white;
+}
+
+.profileName {
+  margin-top: 5%;
+  font-size: 40px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+}
+
+.profileDesc {
+  margin-top: 5%;
+  font-size: 20px;
   font-family: "Roboto", sans-serif;
 }
 
-.miniPostHeader {
-  font-size: 186x;
-  font-weight: 400;
-  width: 90%;
-  margin-bottom: 2%;
+.profileCenter {
+  display: flex;
+  margin-top: 200px;
+  margin-bottom: 200px;
 }
 
-.miniPostDay {
-  font-size: 14px;
-  font-weight: 300;
+.profileCenterLeft {
+  flex: 8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profileCenterLeftHeaderBox {
+  text-align: left;
+  width: 70%;
+  font-family: "Roboto", sans-serif;
+  font-size: 32px;
+  margin-bottom: -3%;
+}
+
+.hr__2 {
+  width: 155px;
+  margin: 2% 0;
+  background: #333;
+  border: none;
+  height: 3px;
+}
+
+.profileCenterRight {
+  flex: 4;
+}
+
+.profileInfo {
+  position: sticky;
+  top: 13%;
+}
+
+.profileInfoHeaderBox {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.profileInfoEditIcon {
+  margin-left: 15px;
+  cursor: pointer;
+  transition: 0.2s !important;
+  color: tomato;
+}
+
+.profileInfoEditIcon:hover {
+  transform: scale(1.15);
+}
+
+.profileInfoHeader {
+  font-size: 32px;
+}
+
+.profileInfoItems {
+  list-style: none;
+  font-family: "Roboto", sans-serif;
+}
+
+.profileInfoItem {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.profileInfoEditItems {
+  list-style: none;
+  font-family: "Roboto", sans-serif;
+}
+
+.profileInfoEditItem {
+  margin-bottom: 3%;
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.profileInfoEditItem input {
+  border: none;
+  border-bottom: 1px solid black;
+  width: 80%;
+  padding: 10px 5px;
+  font-size: 18px;
   color: #333;
+}
+
+.profileInfoEditItem input::placeholder {
+  color: rgb(175, 173, 173);
+  font-weight: 300;
+}
+
+.profileInfoEditItem input:focus {
+  outline: none;
+}
+
+.profileInfofileItem {
+  font-size: 20px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.fileIconBox__2 {
+  margin-left: 15px;
+  cursor: pointer;
+  transition: 0.2s !important;
+}
+
+.fileIconBox__2:hover {
+  transform: scale(1.15);
+}
+
+.fileIcon__2 {
+  border-radius: 50%;
+  border: 1px solid black;
+}
+
+.editButton {
+  position: absolute;
+  right: 20%;
+  font-size: 22px;
+  border: none;
+  padding: 10px 20px;
+  background-color: darkcyan;
+  color: white;
+  font-family: "Roboto", sans-serif;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.profileInfoEditCancleIcon {
+  position: absolute;
+  top: 2%;
+  right: 20%;
+  color: tomato;
+  cursor: pointer;
 }

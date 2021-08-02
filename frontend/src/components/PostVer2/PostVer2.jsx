@@ -1,7 +1,5 @@
 import './postVer2.css';
-import moment from 'moment'
 import { Link } from 'react-router-dom';
-import {format} from 'timeago.js';
 
 export default function PostVer2({post}) {
   const imgLink = "http://localhost:5000/images/";

@@ -20,9 +20,11 @@ export default function Posts() {
   let [popularPosts, setPopularPosts] = useState([]);
   const [slicePopularPosts, setSlicePopularPosts] = useState([]);
   const [dayPosts, setDayPosts] = useState([]);
+  const imgLink = "http://localhost:5000/images/";
 
   useEffect(()=>{
     if(value!==null){
+      window.scrollTo({top:0, behavior:"smooth"})
       const _posts = [...sortPosts];
       setDayPosts(_posts.filter((p) => {
         if(new Date(p.createdAt).getFullYear() === new Date(value).getFullYear()
@@ -79,7 +81,15 @@ export default function Posts() {
 
   return (
     <div className="posts"> 
+    
+    {category ? (
+    <div className="categoryImgBox">
+    <img className="categoryImg" src={imgLink + `post/${category}.jpg`}/>
+    <h4 className="categoryName">{category}</h4>
+    </div>): ""}
+
       <div className="postsWrapper">
+        
       <div className="postsLeft">
         {loading || categoryLoading ? <CircularProgress size="50px" style={{color:"gray", position:"relative", 
       top:"20%"}}/> : (value ? dayPosts.map((post) => < PostVer2 key={post._id} post={post}/>) :  sortPosts?.map((post) => < PostVer2 key={post._id} post={post}/>))}
