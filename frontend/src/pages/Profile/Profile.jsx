@@ -122,7 +122,7 @@ export default function Profile() {
       <div className="profileCenter">
         <div className="profileCenterLeft">
           <div className="profileCenterLeftHeaderBox">
-            <h4 className="profileCenterLeftHeader">User Posts</h4>
+            <h4 className="profileCenterLeftHeader">{myUser?._id === userInfo?._id ? "My Posts" : "User Posts"}</h4>
             <hr className="hr__2"/>
           </div>
           {userPosts?.map((p)=>(
@@ -134,7 +134,7 @@ export default function Profile() {
         <div className="profileInfo">
           <div className="profileInfoHeaderBox">
             <div className="profileInfoHeaderFlexBox">
-          <h4 className="profileInfoHeader">User Information</h4>
+          <h4 className="profileInfoHeader">{myUser?._id === userInfo?._id ? "My Information" : "User Information"}</h4>
           <hr className="hr__2"/>
 
             </div>

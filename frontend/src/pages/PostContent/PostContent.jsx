@@ -41,10 +41,6 @@ export default function PostContent() {
   const {userInfo} = useSelector(state=>state.userGetReducer);
   const {posts} = useSelector(state=>state.postGetReducer);
   const {userInfo:myUser} = useSelector(state=>state.userLoginReducer);
-  const {success} = useSelector(state=>state.postLikeReducer);
-
-
-  console.log(userInfo && userInfo);
 
 
   const postDeleteHandler = (e) =>{
@@ -59,7 +55,7 @@ export default function PostContent() {
   //좋아요
   const postLikeHandler = (e) =>{
     dispatch(postLikeAction(postId, myUser._id));
-    setIsLike(!like);
+    setIsLike(!isLike);
     setLike(isLike ? like-1 : like + 1);
   }
 
@@ -68,7 +64,7 @@ export default function PostContent() {
       setLike(post?.likes.length);
       post.likes.includes(myUser?._id) ? setIsLike(true) : setIsLike(false);
     }
-  }, [post?.likes, myUser]);
+  }, [post]);
   
 
   useEffect(()=>{
