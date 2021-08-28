@@ -9,10 +9,10 @@ router.post(
   asyncHandler(async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
     if (user) {
-      res.status(500).json("이미 존재하는 이메일이 있습니다.");
+      res.status(401).json("이미 존재하는 이메일이 있습니다.");
     } else {
       if (req.body.password !== req.body.checkPassword) {
-        res.status(500).json("비밀번호가 맞지 않습니다.");
+        res.status(401).json("비밀번호가 맞지 않습니다.");
       } else {
         try {
           const salt = await bcrypt.genSalt(10);
@@ -35,7 +35,7 @@ router.post(
   asyncHandler(async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
-      res.status(500).json("존재하는 유저가 없습니다.");
+      res.status(401).json("존재하는 유저가 없습니다.");
     } else {
       try {
         const validPassword = await bcrypt.compare(
@@ -43,7 +43,7 @@ router.post(
           user.password
         );
 
-        !validPassword && res.status(500).json("비밀번호가 틀렸습니다.");
+        !validPassword && res.status(401).json("비밀번호가 틀렸습니다.");
         res.status(200).json(user);
       } catch (error) {
         res.status(500).json(error);
@@ -90,7 +90,7 @@ router.put("/:userId", async (req, res) => {
       res.status(500).json(error);
     }
   } else {
-    res.status(500).json("비밀번호가 맞지 않습니다.");
+    res.status(401).json("비밀번호가 맞지 않습니다.");
   }
 });
 

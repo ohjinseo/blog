@@ -53,7 +53,7 @@ router.get("/", async (req, res) => {
   if (postId) {
     try {
       const post = await Post.findById(postId);
-      !post && res.status(500).json("Not found");
+      !post && res.status(404).json("Not found");
       res.status(200).json(post);
     } catch (error) {
       res.status(500).json(error);
@@ -61,7 +61,7 @@ router.get("/", async (req, res) => {
   } else {
     try {
       const posts = userId ? await Post.find({ userId }) : await Post.find({});
-      !posts && res.status(500).json("Not found");
+      !posts && res.status(404).json("Not found");
       res.status(200).json(posts);
     } catch (error) {
       res.status(500).json(error);
@@ -72,7 +72,7 @@ router.get("/", async (req, res) => {
 //GET CATEGORY
 router.get("/category/:category", async (req, res) => {
   const category = req.params.category;
-  !category && res.status(500).json("no category");
+  !category && res.status(404).json("no category");
   try {
     const categoryPosts = await Post.find({ category });
     res.status(200).json(categoryPosts);
