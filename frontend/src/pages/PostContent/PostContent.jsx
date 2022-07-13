@@ -20,6 +20,7 @@ import { postDeleteAction } from '../../Redux/Actions/posts/postDeleteAction';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { postLikeAction } from '../../Redux/Actions/posts/postLikeAction';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import parse from 'html-react-parser';
 
 export default function PostContent() {
   const [onMenu, setOnMenu] = useState(true);
@@ -32,6 +33,7 @@ export default function PostContent() {
   const history = useHistory();
   const [like, setLike] = useState("");
   const [isLike, setIsLike] = useState(false);
+  const [content, setContent] = useState("");
 
   useEffect(()=>{
     dispatch(postIdFromGetAction(postId));
@@ -41,6 +43,7 @@ export default function PostContent() {
   const {userInfo} = useSelector(state=>state.userGetReducer);
   const {posts} = useSelector(state=>state.postGetReducer);
   const {userInfo:myUser} = useSelector(state=>state.userLoginReducer);
+
 
 
   const postDeleteHandler = (e) =>{
@@ -61,6 +64,7 @@ export default function PostContent() {
 
   useEffect(()=>{
     if(post){
+      setContent(post?.desc);
       setLike(post?.likes.length);
       post.likes.includes(myUser?._id) ? setIsLike(true) : setIsLike(false);
     }
@@ -149,7 +153,8 @@ export default function PostContent() {
           </div>
 
           <div className="postContentBottomCenter">
-            <pre>{post?.desc}</pre>
+            
+            <pre>{parse(content)}</pre>
           </div>
           </div>
           </>

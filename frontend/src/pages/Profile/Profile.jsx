@@ -10,7 +10,6 @@ import AddIcon from '@material-ui/icons/Add';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { userUpdateAction } from '../../Redux/Actions/users/userUpdateAction';
 import axios from 'axios';
-import { userLoginAction } from '../../Redux/Actions/users/userLoginAction';
 
 
 export default function Profile() {
@@ -110,7 +109,7 @@ export default function Profile() {
   return (
     <div className="profile">
       <div className="profileImgBox">
-        <img className="profileBgImg" src={imgLink+'post/nature.jpg'} alt="" />
+        <img className="profileBgImg" src={imgLink+'post/nature8.jpg'} alt="" />
         
         <div className="profileNameBox">
         {image && (<img className="profileImg" src={URL.createObjectURL(image)} alt="" />) ||(<img className="profileImg" src={userInfo?.profilePicture ? (imgLink + userInfo.profilePicture) : imgLink+'person/noavatar.png'} alt="" />)}
@@ -139,7 +138,7 @@ export default function Profile() {
 
             </div>
             
-          {myUser?._id === userInfo?._id && !editOn && <EditIcon onClick={e=>setEditOn(true)} className="profileInfoEditIcon" fontSize="large"/>}
+          {myUser?._id === userInfo?._id && !editOn && <EditIcon onClick={e=>setEditOn(true)} className="profileInfoEditIcon" />}
 
           </div>
           {!editOn &&( <ul className="profileInfoItems">

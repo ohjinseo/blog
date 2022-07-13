@@ -109,7 +109,7 @@ export default function Posts() {
           onChange={onChange}
           value={value}
         />
-        <CancelScheduleSendIcon onClick={e=>onChange("")} fontSize="large" className="cancleIcon"/>
+        <div className="cancleIcon" onClick={e=>onChange("")}>취소</div>
             </div>
           
         </div>

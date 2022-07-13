@@ -1,5 +1,5 @@
 .postBox {
-  width: 70%;
+  width: 90%;
   display: flex;
   margin-top: 50px;
   font-family: "Roboto", sans-serif;
@@ -15,18 +15,19 @@
 }
 
 .postBoxLeft {
-  flex: 2;
+  flex: 1;
 }
 
 .postBoxLeft img {
-  width: 100%;
-  height: 90%;
+  width: 280px;
+  height: 180px;
   object-fit: cover;
   max-height: 234px;
 }
 
 .postBoxRight {
   flex: 3;
+
   margin-left: 20px;
   padding: 10px;
   position: relative;
@@ -54,6 +55,16 @@
   margin-top: 10px;
   font-size: 18px;
   font-weight: 300;
+
+  box-sizing: border-box;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 .postBoxRightDate {

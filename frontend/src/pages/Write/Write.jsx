@@ -6,28 +6,29 @@ import Select from '@material-ui/core/Select';
 import { useEffect, useState, useRef } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { postRegisterAction } from '../../Redux/Actions/posts/postRegisterAction';
-import axios from 'axios';
 import { useHistory, useParams } from 'react-router-dom';
 import { postIdFromGetAction } from '../../Redux/Actions/posts/postGetAction';
 import { postEditAction } from '../../Redux/Actions/posts/postEditAction';
 
+import Editor from '../../components/Editor/Editor';
+
 export default function Write() {
   const {postId} = useParams();
-  
   const [category, setCategory] = useState("");
   const [image, setImage] = useState(null);
   const imgLink = "http://localhost:5000/images/"
-  let desc = useRef();
+  const [desc, setDesc] = useState("");
   let title = useRef();
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-    if(!postId){
-      title.current.value="";
-      setCategory("");
-      desc.current.value="";
-    }
-  }, [postId])
+  // 수정 코드
+  // useEffect(()=>{
+  //   if(!postId){
+  //     title.current.value="";
+  //     setCategory("");
+  //     desc.current.value="";
+  //   }
+  // }, [postId])
 
   useEffect(()=>{
     if(postId){
@@ -61,32 +62,18 @@ export default function Write() {
       }
       
   }, [postInfo, success]);
-
-  useEffect(()=>{
-    window.scrollTo({top:0, behavior:'smooth'})
-  }, [image])
   
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     const post = {
       title:title.current.value,
-      desc:desc.current.value,
+      desc:desc,
       category,
       _id,
     }
 
-
-    if(image){
-      const data = new FormData();
-      const filename = Date.now() + image.name;
-      data.append("name", filename);
-      data.append("file", image);
-      post.image = filename;
-      console.log('asd')
-      try {
-        await axios.post('/api/upload', data);
-      } catch (error) {
-      }
+    if(image && !postId){
+      post.image = image;
     }
 
     if(!image && !postId){
@@ -106,7 +93,7 @@ export default function Write() {
     <div className="write">
       <div className="writeWrapper">
         <div className="writeTop">
-          {image && (<img className="writeTopImg" src={URL.createObjectURL(image)} alt="" />) ||postId &&  post?.image && (<img className="writeTopImg" src={imgLink + post.image} alt="" />)}
+          
         </div>
 
         <form className="writeBottom" onSubmit={onSubmitHandler}>
@@ -129,8 +116,9 @@ export default function Write() {
                   <option value="Piano">Piano</option>
               </Select>
             </FormControl>
+            
+            <Editor setDesc={setDesc} desc={desc} setImage={setImage}/>
 
-            <textarea required ref={desc}  placeholder="What's your mind?" className="writeContent"></textarea>
           </div>
           <button type="submit" className="publishButton">PUBLISH</button>
         </form>

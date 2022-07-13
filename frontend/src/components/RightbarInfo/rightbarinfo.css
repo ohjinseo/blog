@@ -8,7 +8,7 @@
   align-items: center;
 }
 .profilePicture {
-  margin-top: 12%;
+  margin-top: 25%;
   width: 180px;
   height: 180px;
   border-radius: 50%;
@@ -18,7 +18,7 @@
 }
 
 .rightbarDesc {
-  margin: 5% 0;
+  margin: 7% 0;
   font-family: "Roboto", sans-serif;
   font-weight: 300;
   font-size: 18px;
@@ -34,12 +34,12 @@ hr {
   font-family: "Roboto", sans-serif;
   font-size: 22px;
   font-weight: 300;
-  margin: 1% 0;
+  margin: 2% 0;
 }
 
 .rightbarConnectIcons {
   display: flex;
-  margin: 4% 0 8% 0;
+  margin: 4% 0 12% 0;
   width: 45%;
   justify-content: space-around;
 }
@@ -56,7 +56,7 @@ hr {
 .rightbarRecentPosts {
   list-style: none;
   width: 80%;
-  margin: 0 0 20px 30px;
+  margin: 10px 0 20px 30px;
 }
 
 .rightbarRecentPost {

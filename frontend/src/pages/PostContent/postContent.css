@@ -1,6 +1,6 @@
 .postContent {
   display: flex;
-  height: 5000px;
+  height: 3000px;
 }
 
 .postContentLeft {
@@ -51,11 +51,12 @@
 .postContentBottomCenter {
   width: 75%;
   display: flex;
-
   font-size: 20px;
   font-weight: 300;
   line-height: 34px;
   text-align: justify;
+  margin-top: 50px;
+  margin-bottom: 300px;
 }
 
 .postContentBottomCenter pre {
@@ -63,6 +64,13 @@
   font-size: 20px;
   font-weight: 300;
   line-height: 34px;
+  width: 100%;
+  white-space: pre-wrap;
+}
+
+.postContentBottomCenter pre img {
+  max-width: 100%;
+  height: auto;
 }
 
 .categories {

@@ -53,8 +53,8 @@ export default function Home() {
           
           <img className="homeTopImg" src={wallpaper} />
           <div className="homeTopCard">
-            <h4>WELCOME {userInfo?.name}</h4>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo alias, at beatae iusto illum harum velit odio unde perferendis, dolores consequuntur ipsa enim qui? Architecto sunt vero quibusdam officiis optio!</p>
+            <h4>WELCOME {userInfo?.name} !</h4>
+            <p>They say that first impressions make a lasting impression and that how you greet someone can set the groundwork for your relationship. The same is true to blogging. How are you greeting your blog visitors? Are you friendly? Overwhelming? Trustworthy?</p>
           </div>
         </div>
 

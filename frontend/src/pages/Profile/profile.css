@@ -88,7 +88,7 @@
   transition: 0.2s !important;
   color: #333;
   position: relative;
-  top: 3px;
+  top: 10px;
 }
 
 .profileInfoEditIcon:hover {
@@ -96,7 +96,8 @@
 }
 
 .profileInfoHeader {
-  font-size: 32px;
+  font-size: 26px;
+  font-weight: 600;
   margin-bottom: 5%;
 }
 
@@ -106,7 +107,7 @@
 }
 
 .profileInfoItem {
-  font-size: 20px;
+  font-size: 18px;
   margin-bottom: 15px;
 }
 

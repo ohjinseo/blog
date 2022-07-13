@@ -34,6 +34,7 @@ router.post(
   "/login",
   asyncHandler(async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
+    console.log(req.body);
     if (!user) {
       res.status(401).json("존재하는 유저가 없습니다.");
     } else {
@@ -51,6 +52,18 @@ router.post(
     }
   })
 );
+
+//GET USER
+router.get("/", async (req, res) => {
+  try {
+    console.log("asd");
+
+    const user = User.find({});
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 
 //GET USER
 router.get("/:userId", async (req, res) => {

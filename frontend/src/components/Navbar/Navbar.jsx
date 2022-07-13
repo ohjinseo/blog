@@ -21,7 +21,7 @@ export default function Navbar() {
         <div className="navBarLeft">
           <div className="navBarLeftLogo">
             <Link to="/" style={{textDecoration:"none", color:"black"}}>
-            <span className="navBarLeftLogoText">Jinseo's Blog</span>
+            <span className="navBarLeftLogoText">BLOG</span>
             </Link>
           </div>
         </div>
