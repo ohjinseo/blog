@@ -6,20 +6,20 @@ import Select from '@material-ui/core/Select';
 import { useEffect, useState, useRef } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { postRegisterAction } from '../../Redux/Actions/posts/postRegisterAction';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, useLocation } from 'react-router-dom';
 import { postIdFromGetAction } from '../../Redux/Actions/posts/postGetAction';
 import { postEditAction } from '../../Redux/Actions/posts/postEditAction';
-
 import Editor from '../../components/Editor/Editor';
+import axios from 'axios';
 
 export default function Write() {
   const {postId} = useParams();
   const [category, setCategory] = useState("");
   const [image, setImage] = useState(null);
-  const imgLink = "http://localhost:5000/images/"
   const [desc, setDesc] = useState("");
   let title = useRef();
   const dispatch = useDispatch();
+  let location = useLocation();
 
   // 수정 코드
   // useEffect(()=>{
@@ -37,11 +37,17 @@ export default function Write() {
   }, [postId])
   
 
-  const {_id} = useSelector(state => state.userLoginReducer.userInfo);
+  const {_id:userId} = useSelector(state => state.userLoginReducer.userInfo);
   const history = useHistory();
   const {postInfo} = useSelector(state=>state.postRegisterReducer);
   let {post} = useSelector(state=>state.postIdFromGetReducer);
   const {success} = useSelector(state=>state.postEditReducer);
+
+  useEffect(() => {
+    return async () => {
+      await axios.delete(`/api/upload/${userId}`)
+    }
+  }, [])
 
   useEffect(()=>{
     if(post && postId){
@@ -71,7 +77,7 @@ export default function Write() {
       title:title.current.value,
       desc:desc,
       category,
-      _id,
+      _id:userId,
     }
 
     if(image && !postId){
@@ -119,7 +125,7 @@ export default function Write() {
               </Select>
             </FormControl>
             
-            <Editor setDesc={setDesc} desc={desc} setImage={setImage}/>
+            <Editor setDesc={setDesc} desc={desc} setImage={setImage} userId={userId}/>
 
           </div>
           <button type="submit" className="publishButton">PUBLISH</button>

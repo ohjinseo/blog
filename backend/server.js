@@ -10,6 +10,7 @@ const multer = require("multer");
 const path = require("path");
 const mime = require("mime-types");
 const {v4: uuid} = require("uuid");
+const fs = require("fs-extra");
 
 dotenv.config();
 
@@ -17,7 +18,12 @@ dbConnect();
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "images");
+        const path = `./images/temp/${req.params.userId}`;
+        // 만약 상위 폴더까지 생성하고 싶으면 두 번째 인자로 recursive:true 옵션
+        !fs.existsSync(path) && fs.mkdirSync(path, (err) => {
+            if(err) cb(err);
+        });
+        cb(null, `images/temp/${req.params.userId}`);
     },
     filename: (req, file, cb) => {
         cb(null, `${uuid()}.${mime.extension(file.mimetype)}`);
@@ -38,11 +44,21 @@ const upload = multer({
     }
 });
 
-app.post("/api/upload", upload.single("file"), (req, res) => {
+app.post("/api/upload/:userId", upload.single("file"), (req, res) => {
     res
         .status(200)
         .json(req.file);
 });
+
+app.delete("/api/upload/:userId", (req, res) => {
+    const path = `./images/temp/${req.params.userId}`;
+    try {
+        fs.existsSync(path) && fs.removeSync(path);
+        res.status(200).json("디렉토리를 성공적으로 삭제하였습니다.")
+    } catch (err) {
+        throw new Error(err.message);
+    }
+})
 
 app.use(express.json());
 app.use(helmet());

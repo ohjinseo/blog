@@ -3,9 +3,9 @@ import axios from 'axios';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-const Editor = ({setDesc, desc, setImage}) => {
+const Editor = ({setDesc, desc, setImage, userId}) => {
     const [flag, setFlag] = useState(false);
-    const imgLink = "http://localhost:5000/images/"
+    const imgLink = "http://localhost:5000/images"
 
     const customUploadAdapter = (loader) => {
         return {
@@ -15,18 +15,18 @@ const Editor = ({setDesc, desc, setImage}) => {
                      loader.file.then( (file) => {
                             data.append("name", file.name);
                             data.append("file", file);
-
-                            axios.post('/api/upload', data)
+                            axios.post(`/api/upload/${userId}`, data)
                                 .then((res) => {
                                     if(!flag){
                                         setFlag(true);
                                         setImage(res.data.filename);
                                     }
                                     resolve({
-                                        default: `${imgLink}/${res.data.filename}`
+                                        default: `${imgLink}/temp/${userId}/${res.data.filename}`
                                     });
                                 })
                                 .catch((err)=>reject(err));
+                                
                         })
                 })
             }
@@ -54,6 +54,7 @@ const Editor = ({setDesc, desc, setImage}) => {
             onChange={(event, editor) => {
                 const data = editor.getData();
                 setDesc(data);
+                console.log(data);
             }}
             onBlur={(event, editor) => {
                 // console.log('Blur.', editor);

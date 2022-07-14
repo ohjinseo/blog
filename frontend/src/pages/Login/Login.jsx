@@ -10,7 +10,7 @@ export default function Login({history}) {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const {error, loading, userInfo} = useSelector(state => state.userLoginReducer);
-  console.log(history);
+
   useEffect(()=>{
     if(userInfo){
       history.push('/');

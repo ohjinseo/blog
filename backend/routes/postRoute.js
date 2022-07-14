@@ -1,13 +1,41 @@
 const router = require("express").Router();
 const Post = require("../models/Post");
 const asyncHandler = require("express-async-handler");
+const fs = require("fs-extra");
 
 //REGISTER POST
 router.post("/register", async (req, res) => {
   try {
-    const newPost = await new Post(req.body).save();
+    let newPost = await new Post(req.body).save();
+    const {_id:postId, userId, desc} = newPost;
+
+    const oldPath = `./images/temp/${userId}`;
+    const newPath = `./images/posts/${postId}`;
+
+    // 삭제를 대비해 폴더 생성
+    !fs.existsSync(newPath) && fs.mkdirSync(newPath);
+
+    const imgSrcReg = /(<img[^>]*src\s*=\s*[\"']?([^>\"']+)[\"']?[^>]*>)/g;
+
+    while(imgSrcReg.test(desc)){
+      let src = RegExp.$2.trim();
+      let imgName = src.substr(src.indexOf(userId) + userId.length + 1);
+      let tmpImgPath = oldPath + `/${imgName}`;
+      let postImgPath = newPath + `/${imgName}`;
+      
+      // 만약 temp 폴더에 desc 이미지가 존재하면
+      fs.existsSync(tmpImgPath) && fs.rename(tmpImgPath, postImgPath, (err) => {
+        if(err) throw new Error(err);
+        console.log("성공적으로 이미지 옮김");
+      })
+    }
+
+    const newDesc = desc.replaceAll(`temp/${userId}`, `posts/${postId}`);
+    newPost = await Post.findOneAndUpdate({_id:postId}, {desc:newDesc});
+
     res.status(200).json(newPost);
   } catch (error) {
+    console.log(error);
     res.status(500).json(error);
   }
 });
@@ -54,17 +82,17 @@ router.get("/", async (req, res) => {
     try {
       const post = await Post.findById(postId);
       !post && res.status(404).json("Not found");
-      res.status(200).json(post);
+      return res.status(200).json(post);
     } catch (error) {
-      res.status(500).json(error);
+      return res.status(500).json(error);
     }
   } else {
     try {
       const posts = userId ? await Post.find({ userId }) : await Post.find({});
       !posts && res.status(404).json("Not found");
-      res.status(200).json(posts);
+      return res.status(200).json(posts);
     } catch (error) {
-      res.status(500).json(error);
+      return res.status(500).json(error);
     }
   }
 });
