@@ -47,14 +47,13 @@ const Editor = ({setDesc, desc, setImage}) => {
               
                 extraPlugins: [uploadPlugin]
             }}
-            data="<p>Hello World</p>"
+            data={desc ? desc : "<p>Hello World</p>"}
             onReady={editor => {
                 // console.log('Editor is ready to use!', editor);
             }}
             onChange={(event, editor) => {
                 const data = editor.getData();
                 setDesc(data);
-                console.log(desc);
             }}
             onBlur={(event, editor) => {
                 // console.log('Blur.', editor);

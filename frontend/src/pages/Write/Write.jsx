@@ -47,7 +47,9 @@ export default function Write() {
     if(post && postId){
       title.current.value=post.title;
       setCategory(post.category);
-      desc.current.value = post.desc;
+      setDesc(post.desc);
+
+      console.log(desc);
     }
   }, [post])
 
