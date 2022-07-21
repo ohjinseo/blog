@@ -1,21 +1,28 @@
-service: blog # 계정의 고유한 이름 설정
+service: blog
 
-frameworkVersion: "3" # 프레임워크 버전 설정
+package:
+  individually: true
+  exclude:
+    - .git/**
+    - node_modules/**
+    - .venv/**
 
-provider: # (1)asd
+frameworkVersion: "3"
+
+provider:
   name: aws
   runtime: nodejs12.x
-  stage: "dev" # (2)
+  stage: "dev"
   region: ${file(config.json):REGION}
 
-  iamRoleStatements: # (3)
+  iamRoleStatements:
     - Effect: Allow
       Action:
         - s3:GetObject
         - s3:PutObject
       Resource: "arn:aws:s3:::${file(config.json):BUCKET_NAME}/*"
 
-functions: # (4)
+functions:
   hello:
     handler: handler.generatePresignedUrl
     events:

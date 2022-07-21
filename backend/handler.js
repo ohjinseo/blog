@@ -1,18 +1,41 @@
-'use strict';
+const S3 = require("aws-sdk/clients/s3") 
+const config = require("./config.json")
+const s3 = new S3();
 
-module.exports.hello = async (event) => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify(
-      {
-        message: 'Go Serverless v1.0! Your function executed successfully!',
-        input: event,
-      },
-      null,
-      2
-    ),
-  };
+module.exports.generatePresignedUrl = async (event) => {
 
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
+  try {
+    console.log({"event log":event}); 
+    
+    let body = JSON.parse(event.body); 
+    let objectKey = body.objectKey;
+    let s3Action = body.s3Action;
+    let contentType = body.contentType;
+    let expirationTime = 60;
+
+    let params = {
+      Bucket: config.BUCKET_NAME,
+      Key: objectKey,
+      Expires: expirationTime
+    }
+
+    if(s3Action === 'putObject'){ 
+      params.ContentType = contentType;
+      params.Expires = 300
+    }
+
+    const signedUrl = s3.getSignedUrl(s3Action, params);
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify(signedUrl)
+    }
+
+  } catch (error) {
+    console.log(error);
+
+    return{
+      statueCode:500
+    }
+  }
 };
