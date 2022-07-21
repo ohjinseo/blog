@@ -1,0 +1,24 @@
+service: blog # 계정의 고유한 이름 설정
+
+frameworkVersion: "3" # 프레임워크 버전 설정
+
+provider: # (1)asd
+  name: aws
+  runtime: nodejs12.x
+  stage: "dev" # (2)
+  region: ${file(config.json):REGION}
+
+  iamRoleStatements: # (3)
+    - Effect: Allow
+      Action:
+        - s3:GetObject
+        - s3:PutObject
+      Resource: "arn:aws:s3:::${file(config.json):BUCKET_NAME}/*"
+
+functions: # (4)
+  hello:
+    handler: handler.generatePresignedUrl
+    events:
+      - http:
+          path: presigned
+          method: post
