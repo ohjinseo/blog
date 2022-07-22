@@ -21,13 +21,17 @@ module.exports.generatePresignedUrl = async (event) => {
 
     if(s3Action === 'putObject'){ 
       params.ContentType = contentType;
-      params.Expires = 300
+      params.Expires = 300;
     }
 
     const signedUrl = s3.getSignedUrl(s3Action, params);
 
     return {
       statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
       body: JSON.stringify(signedUrl)
     }
 

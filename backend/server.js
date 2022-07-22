@@ -11,6 +11,7 @@ const path = require("path");
 const mime = require("mime-types");
 const {v4: uuid} = require("uuid");
 const fs = require("fs-extra");
+const cors = require("cors");
 
 dotenv.config();
 
@@ -60,6 +61,7 @@ app.delete("/api/upload/:userId", (req, res) => {
     }
 })
 
+app.use(cors());
 app.use(express.json());
 app.use(helmet());
 app.use("/images", express.static(path.join(__dirname, "/images")));
