@@ -45,7 +45,12 @@ export default function Write() {
 
   useEffect(() => {
     return async () => {
-      await axios.delete(`/api/upload/${userId}`)
+      console.log(userId);
+      await axios.delete(process.env.REACT_APP_DELETE_S3_OBJECTS, {
+        data:{
+        userId
+        }
+      });
     }
   }, [])
 

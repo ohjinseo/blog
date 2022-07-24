@@ -35,3 +35,11 @@ functions:
           path: copy
           method: put
           cors: true
+
+  deleteObjects:
+    handler: handler.deleteObjects
+    events:
+      - http:
+          path: /
+          cors: true
+          method: delete

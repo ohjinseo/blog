@@ -43,17 +43,6 @@ const Editor = ({setDesc, desc, setImage, userId}) => {
                                resolve({
                                 default: `${process.env.REACT_APP_IMAGE_URL}/temp/${userId}/${filename}.${type}`
                                 });
-                            // axios.post(`/api/upload/${userId}`, data)
-                            //     .then((res) => {
-                            //         if(!flag){
-                            //             setFlag(true);
-                            //             setImage(res.data.filename);
-                            //         }
-                            //         resolve({
-                            //             default: `${process.env.REACT_APP_IMAGE_URL}/temp/${userId}/${file.name}`
-                            //         });
-                            //     })
-                            //     .catch((err)=>reject(err));
                                 
                         })
                 })
