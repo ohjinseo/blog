@@ -4,7 +4,6 @@ package:
   individually: true
   exclude:
     - .git/**
-    - node_modules/**
     - .venv/**
 
 frameworkVersion: "3"
@@ -17,9 +16,7 @@ provider:
 
   iamRoleStatements:
     - Effect: Allow
-      Action:
-        - s3:GetObject
-        - s3:PutObject
+      Action: "*"
       Resource: "arn:aws:s3:::${file(config.json):BUCKET_NAME}/*"
 
 functions:
@@ -29,3 +26,12 @@ functions:
       - http:
           path: presigned
           method: post
+          cors: true
+
+  copyObjects:
+    handler: handler.moveObjects
+    events:
+      - http:
+          path: copy
+          method: put
+          cors: true

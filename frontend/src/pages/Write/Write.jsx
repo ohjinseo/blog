@@ -59,14 +59,28 @@ export default function Write() {
     }
   }, [post])
 
+  const moveS3Objects = async() => {
+    await axios.put(process.env.REACT_APP_MOVE_S3_OBJECTS,{
+      userId,
+      "postId":postInfo._id
+    })
+  }
+
   useEffect(()=>{
-    if(success){
-      history.push(`/post/${post._id}`);
-      window.location.reload();
-    }
+      if(success){
+        history.push(`/post/${post._id}`);
+        window.location.reload();
+      }
+
     if(postInfo){
-      history.push(`post/${postInfo._id}`);
+      moveS3Objects();
+
+      setTimeout(() => {
+        history.push(`post/${postInfo._id}`);
       window.location.reload();
+      }, 1000);
+
+      
       }
       
   }, [postInfo, success]);

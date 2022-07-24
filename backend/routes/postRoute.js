@@ -9,26 +9,10 @@ router.post("/register", async (req, res) => {
     let newPost = await new Post(req.body).save();
     const {_id:postId, userId, desc} = newPost;
 
-    const oldPath = `./images/temp/${userId}`;
-    const newPath = `./images/posts/${postId}`;
-
-    // 삭제를 대비해 폴더 생성
-    !fs.existsSync(newPath) && fs.mkdirSync(newPath);
+    const oldPath = `temp/${userId}`;
+    const newPath = `posts/${postId}`;
 
     const imgSrcReg = /(<img[^>]*src\s*=\s*[\"']?([^>\"']+)[\"']?[^>]*>)/g;
-
-    while(imgSrcReg.test(desc)){
-      let src = RegExp.$2.trim();
-      let imgName = src.substr(src.indexOf(userId) + userId.length + 1);
-      let tmpImgPath = oldPath + `/${imgName}`;
-      let postImgPath = newPath + `/${imgName}`;
-      
-      // 만약 temp 폴더에 desc 이미지가 존재하면
-      fs.existsSync(tmpImgPath) && fs.rename(tmpImgPath, postImgPath, (err) => {
-        if(err) throw new Error(err);
-        console.log("성공적으로 이미지 옮김");
-      })
-    }
 
     const newDesc = desc.replaceAll(`temp/${userId}`, `posts/${postId}`);
     newPost = await Post.findOneAndUpdate({_id:postId}, {desc:newDesc});
