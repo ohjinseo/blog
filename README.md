@@ -1,6 +1,5 @@
 ## Image Upload Refactoring
 
----
 
 [[ReactJS] Express + CKeditor5 이미지 업로드 구현해보기 (1)](https://velog.io/@ohjinseo/ReactJS-Express-CKeditor5-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%97%85%EB%A1%9C%EB%93%9C-%EA%B5%AC%ED%98%84%ED%95%B4%EB%B3%B4%EA%B8%B0)
 
